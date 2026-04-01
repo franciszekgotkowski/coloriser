@@ -103,8 +103,8 @@ int main() {
 
     int editMode = true;
     while (!WindowShouldClose()) {
-        cameraPlayer1.position.x = 3 * cos(GetTime());
-        cameraPlayer1.position.z = 3 * sin(GetTime());
+        cameraPlayer1.position.x = 3 * cos(GetTime()/5);
+        cameraPlayer1.position.z = 3 * sin(GetTime()/5);
 
         // Draw
         //----------------------------------------------------------------------------------
@@ -157,10 +157,17 @@ int main() {
         // tri.arr[vertexIndex].color.g = (u8)tempG;
         // tri.arr[vertexIndex].color.b = (u8)tempB;
         //
+        tri.arr[0].color.b = 128 + 127 * sin(1.2*GetTime());
+        tri.arr[0].color.g = 128 + 127 * cos(0.2*GetTime());
+        tri.arr[0].color.r = 128 + 127 * sin(4.0*GetTime());
 
-        tri.arr[0].color.b =128 - 127 * sin(1.4f*GetTime());
-        tri.arr[1].color.g =128 + 127 * cos(GetTime());
-        tri.arr[2].color.r = 128 - 127 * sin(GetTime());
+        tri.arr[1].color.b = 128 + 127 * cos(GetTime());
+        tri.arr[1].color.g = 128 + 127 * sin(GetTime());
+        tri.arr[1].color.r = 128 + 127 * sin(GetTime());
+
+        tri.arr[2].color.b = 128 + 127 * sin(GetTime());
+        tri.arr[2].color.g = 128 + 127 * sin(GetTime());
+        tri.arr[2].color.r = 128 + 127 * cos(GetTime());
 
         updatePosition(&tri);
 
