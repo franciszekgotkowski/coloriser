@@ -5,6 +5,8 @@
 #include <rlgl.h>
 #include <typedefs.h>
 
+#include "Window.h"
+
 const i32 screenWidth = 800;
 const i32 screenHeight = 600;
 const u32 borderWidth = (screenHeight + screenWidth) / (2 * 100);
@@ -94,6 +96,9 @@ int main() {
         },
     };
 
+    Coloriser::Window win = Coloriser::Window(800, 600, 60);
+    win.AddNewPane(Coloriser::Pane(0, 0, 100, 30));
+    win.AddNewPane(Coloriser::Pane(0, 0, 800, 90));
 
     rlDisableBackfaceCulling();
 
