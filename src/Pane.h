@@ -2,12 +2,25 @@
 
 #include <typedefs.h>
 
+#include "raylib.h"
+
 namespace Coloriser {
     enum class PaneNeighbour {
         LEFT,
         RIGHT,
         UP,
         DOWN,
+
+        AMOUNT_OF_DIRECTIONS
+    };
+
+    enum class MouseRelativePosition {
+        INSIDE,
+        LEFT,
+        RIGHT,
+        UP,
+        DOWN,
+        DIAGONALL,
 
         AMOUNT_OF_DIRECTIONS
     };
@@ -31,5 +44,9 @@ namespace Coloriser {
         );
 
         Pane();
+
+        MouseRelativePosition RelativeMousePosition(
+            Vector2 mousePosition
+        );
     };
 }

@@ -18,13 +18,13 @@ i32 egde = 0;
 typedef struct {
     Vector3 position;
     Color color;
-}Edge ;
+} Edge;
 
 Vector3 ColorToPosition(Color col) {
-    return (Vector3) {
-        .x = ((f32)col.r/255.0f) - 0.5f,
-        .y = ((f32)col.g/255.0f) - 0.5f,
-        .z = ((f32)col.b/255.0f) - 0.5f,
+    return (Vector3){
+        .x = ((f32)col.r / 255.0f) - 0.5f,
+        .y = ((f32)col.g / 255.0f) - 0.5f,
+        .z = ((f32)col.b / 255.0f) - 0.5f,
     };
 }
 
@@ -36,11 +36,10 @@ typedef union {
     };
 
     Edge arr[3];
-
 } Triangle;
 
 
-void updatePosition(Triangle *tri) {
+void updatePosition(Triangle* tri) {
     tri->e1.position = ColorToPosition(tri->e1.color);
     tri->e2.position = ColorToPosition(tri->e2.color);
     tri->e3.position = ColorToPosition(tri->e3.color);
@@ -96,20 +95,12 @@ int main() {
         },
     };
 
-    Coloriser::Window win = Coloriser::Window(800, 600, 60);
-    win.AddNewPane(Coloriser::Pane(0, 0, 100, 30));
-    win.AddNewPane(Coloriser::Pane(0, 0, 800, 90));
-
     rlDisableBackfaceCulling();
-
-    // f32 tempR = 0.0f;
-    // f32 tempG = 0.0f;
-    // f32 tempB = 0.0f;
 
     int editMode = true;
     while (!WindowShouldClose()) {
-        cameraPlayer1.position.x = 3 * cos(GetTime()/5);
-        cameraPlayer1.position.z = 3 * sin(GetTime()/5);
+        cameraPlayer1.position.x = 3 * cos(GetTime() / 5);
+        cameraPlayer1.position.z = 3 * sin(GetTime() / 5);
 
         // Draw
         //----------------------------------------------------------------------------------
@@ -162,9 +153,9 @@ int main() {
         // tri.arr[vertexIndex].color.g = (u8)tempG;
         // tri.arr[vertexIndex].color.b = (u8)tempB;
         //
-        tri.arr[0].color.b = 128 + 127 * sin(1.2*GetTime());
-        tri.arr[0].color.g = 128 + 127 * cos(0.2*GetTime());
-        tri.arr[0].color.r = 128 + 127 * sin(4.0*GetTime());
+        tri.arr[0].color.b = 128 + 127 * sin(1.2 * GetTime());
+        tri.arr[0].color.g = 128 + 127 * cos(0.2 * GetTime());
+        tri.arr[0].color.r = 128 + 127 * sin(4.0 * GetTime());
 
         tri.arr[1].color.b = 128 + 127 * cos(GetTime());
         tri.arr[1].color.g = 128 + 127 * sin(GetTime());
@@ -190,6 +181,7 @@ int main() {
         EndTextureMode();
         DrawTextureRec(screenPlayer1.texture, splitScreenRect, (Vector2){0, 0}, WHITE);
         EndDrawing();
+
     }
 
     CloseWindow();
