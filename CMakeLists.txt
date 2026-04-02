@@ -28,7 +28,9 @@ target_compile_options(coloriser PRIVATE
 target_sources(coloriser PRIVATE
         src/main.cpp
         src/Pane.cpp
+        src/PaneContents.cpp
         src/Window.cpp
+        src/raygui_implementation.cpp
 )
 
 target_include_directories(coloriser

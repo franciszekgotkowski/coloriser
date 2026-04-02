@@ -1,19 +1,22 @@
 #include <Pane.h>
-
 #include <typedefs.h>
 #include <range.h>
 
+#include <raylib.h>
+#include <raygui.h>
+
 Coloriser::Pane::Pane(
-    u32 x,
-    u32 y,
-    u32 width,
-    u32 height
+    i8 leftNeighbourIdx,
+    i8 rightNeighbourIdx,
+    i8 upperNeighbourIdx,
+    i8 belowNeighbourIdx,
+    std::string name
 ) {
-    this->x = x;
-    this->y = y;
-    this->widht = width;
-    this->height = height;
-    this->active = true;
+    this->leftNeighbourIdx = leftNeighbourIdx;
+    this->rightNeighbourIdx = rightNeighbourIdx;
+    this->upperNeighbourIdx = upperNeighbourIdx;
+    this->belowNeighbourIdx = belowNeighbourIdx;
+    this->name = name;
 }
 
 Coloriser::Pane::Pane() {
@@ -22,6 +25,7 @@ Coloriser::Pane::Pane() {
     this->widht = 0;
     this->height = 0;
     this->active = false;
+    this->name = "NO NAME";
 }
 
 
@@ -84,7 +88,7 @@ Coloriser::MouseRelativePosition Coloriser::Pane::RelativeMousePosition(
     if (relativeMousePos[0][0] ||
         relativeMousePos[0][2] ||
         relativeMousePos[2][0] ||
-        relativeMousePos[2][2] ) {
+        relativeMousePos[2][2]) {
         return MouseRelativePosition::DIAGONALL;
     }
 
@@ -105,4 +109,16 @@ Coloriser::MouseRelativePosition Coloriser::Pane::RelativeMousePosition(
     }
 
     return MouseRelativePosition::INSIDE;
+}
+
+void Coloriser::Pane::DrawOutline() {
+    GuiGroupBox(
+        (Rectangle) {
+            .x = (f32)this->x,
+            .y = (f32)this->y,
+            .width = (f32)this->widht,
+            .height = (f32)this->height
+        },
+        this->name.c_str()
+        );
 }
