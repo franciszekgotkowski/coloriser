@@ -1,0 +1,15 @@
+// Project-local debug tasks
+//
+// For more documentation on how to configure debug tasks,
+// see: https://zed.dev/docs/debugger
+[
+	{
+		"label": "Debug native binary",
+		"program": "$ZED_WORKTREE_ROOT/build/coloriser",
+		"build": "make",
+		"request": "launch",
+		"adapter": "GDB",
+		// "adapter": "CodeLLDB",
+		"cwd": "$ZED_WORKTREE_ROOT/build"
+	}
+]
