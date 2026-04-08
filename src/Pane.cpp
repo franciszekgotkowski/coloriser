@@ -6,16 +6,8 @@
 #include <raygui.h>
 
 Coloriser::Pane::Pane(
-    i8 leftNeighbourIdx,
-    i8 rightNeighbourIdx,
-    i8 upperNeighbourIdx,
-    i8 belowNeighbourIdx,
     std::string name
 ) {
-    this->leftNeighbourIdx = leftNeighbourIdx;
-    this->rightNeighbourIdx = rightNeighbourIdx;
-    this->upperNeighbourIdx = upperNeighbourIdx;
-    this->belowNeighbourIdx = belowNeighbourIdx;
     this->name = name;
 }
 

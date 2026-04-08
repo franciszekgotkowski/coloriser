@@ -60,18 +60,11 @@ int main() {
 
     MainWindow.InitializeGuiWindow();
 
-    MainWindow.AddNewPane(
-        -1,
-        -1,
-        -1,
-        -1,
-        "okno"
-        );
+    MainWindow.AddNewPane("The Cube");
+    MainWindow.AddNewPane("Settings");
+    MainWindow.AddNewPane("Image");
 
-    MainWindow.panes[0].x = 100;
-    MainWindow.panes[0].y = 100;
-    MainWindow.panes[0].widht = 100;
-    MainWindow.panes[0].height = 100;
+
 
     MainWindow.RenderLoop();
 

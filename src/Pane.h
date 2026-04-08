@@ -30,7 +30,6 @@ namespace Coloriser {
 
     class Pane {
     public:
-        PaneNeighbour paneNeighboursIdx[(u32)PaneNeighbour::AMOUNT_OF_DIRECTIONS];
         std::string name;
 
         u32 x = 0;
@@ -46,10 +45,6 @@ namespace Coloriser {
         bool active = false; // this field is to tell if object have been activated or is it just an array filler
 
         Pane(
-            i8 leftNeighbourIdx,
-            i8 rightNeighbourIdx,
-            i8 upperNeighbourIdx,
-            i8 belowNeighbourIdx,
             std::string name
         );
 

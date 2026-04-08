@@ -32,12 +32,19 @@ namespace Coloriser {
 
         // returns index of this pane
         i32 AddNewPane(
-            i8 leftNeighbourIdx,
-            i8 rightNeighbourIdx,
-            i8 UpperNeighbourIdx,
-            i8 BelowNeighbourIdx,
             std::string name
         );
+
+        // Connections are placed in square grid with the size of MAX_AMOUNT_OF_PANES
+        // Only top right triangle will be looked at because connections are 2 directional
+        //    0  1  2  3 x
+        // 0  0  1  0  0
+        // 1  0  1  1  0
+        // 2  0  0  0  0
+        // 3  0  0  0  0
+        // y
+        // This means that
+        void LoadInPaneConnections(bool* connections);
 
         void InitializeGuiWindow();
 

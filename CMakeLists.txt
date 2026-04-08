@@ -1,47 +1,44 @@
-cmake_minimum_required(VERSION 4.1)
+cmake_minimum_required(VERSION 3.31)
 project(coloriser)
-
-add_executable(coloriser)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+add_executable(coloriser)
+
 set(CMAKE_CONFIGURATION_TYPES
-        Debug
-        Release
+    Debug
+    Release
 )
 set(CMAKE_BUILD_TYPE Debug)
 
 target_compile_options(coloriser PRIVATE
-        -fno-exceptions
-        -fno-rtti
-        -Wextra
-        -Wall
-        -Werror
-)
-
-target_compile_options(coloriser PRIVATE
-        $<$<CONFIG:Debug>:-g -O0 -pg>
-        $<$<CONFIG:Release>:-O3 -Wno-unused-but-set-variable -Wno-unused-variable>
+    -fno-exceptions
+    -fno-rtti
+    -Wextra
+    -Wall
+    -Werror
+    $<$<CONFIG:Debug>:-g -O0 -pg>
+    $<$<CONFIG:Release>:-O3 -Wno-unused-but-set-variable -Wno-unused-variable>
 )
 
 target_sources(coloriser PRIVATE
-        src/main.cpp
-        src/Pane.cpp
-        src/PaneContents.cpp
-        src/Window.cpp
-        src/raygui_implementation.cpp
+    src/main.cpp
+    src/Pane.cpp
+    src/PaneContents.cpp
+    src/Window.cpp
+    src/raygui_implementation.cpp
 )
 
 target_include_directories(coloriser
-        SYSTEM PRIVATE
-        ${CMAKE_CURRENT_SOURCE_DIR}/libs/headers
-        PRIVATE
-        ${CMAKE_CURRENT_SOURCE_DIR}/src
+    SYSTEM PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/libs/headers
+    PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/src
 )
 
 target_link_libraries( coloriser PRIVATE
-        raylib
+    raylib
 )
 
-add_subdirectory(libs/raylib)
+add_subdirectory( libs/raylib )

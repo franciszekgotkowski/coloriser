@@ -17,10 +17,6 @@ Coloriser::Window::Window(
 }
 
 i32 Coloriser::Window::AddNewPane(
-    i8 leftNeighbourIdx,
-    i8 rightNeighbourIdx,
-    i8 UpperNeighbourIdx,
-    i8 BelowNeighbourIdx,
     std::string name
 ) {
     if (this->amountOfPanes >= MAX_AMOUNT_OF_PANES) {
@@ -28,10 +24,6 @@ i32 Coloriser::Window::AddNewPane(
     }
 
     this->panes[this->amountOfPanes] = Pane(
-        leftNeighbourIdx,
-        rightNeighbourIdx,
-        UpperNeighbourIdx,
-        BelowNeighbourIdx,
         name
     );
     this->amountOfPanes++;
