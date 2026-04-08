@@ -18,6 +18,12 @@ namespace Coloriser {
 		height
 	) {}
 
+	Button::Button(
+		std::string text
+	) : Button() {
+		this->text = text;
+	}
+
 	void Button::Draw() {
 		if ( GuiButton(
 			this->coordinates.RlRect(),

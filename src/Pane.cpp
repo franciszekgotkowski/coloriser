@@ -3,6 +3,7 @@
 #include <Pane.h>
 #include <string>
 #include <typedefs.h>
+#include <utility>
 
 namespace Coloriser {
 
@@ -60,6 +61,8 @@ namespace Coloriser {
 			.width = width - 2 * borderWidth,
 			.height = heigth - 2 * borderWidth
 		};
+
+		this->borderWidth = borderWidth;
 
 		CoordinateRect childCoordinates;
 		CoordinateRect uiObjectCoordinates;
@@ -167,15 +170,15 @@ namespace Coloriser {
 	}
 
 	void Pane::Draw() {
-		GuiGroupBox(
-			(Rectangle) {
-				(f32)this->paneCoordinates.xPos,
-				(f32)this->paneCoordinates.yPos,
-				(f32)this->paneCoordinates.width,
-				(f32)this->paneCoordinates.height,
-			},
-			this->name.c_str()
-		);
+		// GuiGroupBox(
+		// 	(Rectangle) {
+		// 		(f32)this->paneCoordinates.xPos,
+		// 		(f32)this->paneCoordinates.yPos,
+		// 		(f32)this->paneCoordinates.width,
+		// 		(f32)this->paneCoordinates.height,
+		// 	},
+		// 	this->name.c_str()
+		// );
 
 		if (this->uiObject) {
 			this->uiObject->Draw();
@@ -185,4 +188,25 @@ namespace Coloriser {
 			this->childPane->Draw();
 		}
 	};
+
+	void Pane::ResetCoordinateVariables() {
+		this->SetNewCoordinateVariables(
+			this->paneCoordinates.xPos,
+			this->paneCoordinates.yPos,
+			this->paneCoordinates.width,
+			this->paneCoordinates.height,
+			this->borderWidth
+		);
+	}
+
+	void Pane::AssignChildPane (
+		std::unique_ptr<Pane> childPane,
+		u32 percentOfCanvasForChild
+	) {
+		if (childPane) {
+			this->childPane = std::move(childPane);
+			this->percentOfCanvasForChild = percentOfCanvasForChild;
+		}
+		this->ResetCoordinateVariables();
+	}
 }

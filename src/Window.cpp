@@ -26,10 +26,10 @@ namespace Coloriser {
 			this->rootPane = std::move(rootPane);
 		}
 		this->rootPane->SetNewCoordinateVariables(
-			borderWidth,
-			borderWidth,
-			this->width - 2 * borderWidth,
-			this->height - 2 * borderWidth,
+			0,
+			0,
+			this->width,
+			this->height,
 			this->borderWidth
 		);
 	}

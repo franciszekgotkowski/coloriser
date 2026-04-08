@@ -26,9 +26,15 @@ namespace Coloriser{
 
 		std::unique_ptr<UiObject> uiObject;
 
+		u32 borderWidth;
+
 		u32 percentOfCanvasForChild = 50;
 		Direction whereIsChild = Direction::UNKNOWN;
 		std::unique_ptr<Pane> childPane;
+
+
+		// this function runs SetNewCoordinateVariables with the its data so it can correct its dividing after adding new element
+		void ResetCoordinateVariables();
 
 		public:
 		Pane(
@@ -58,6 +64,11 @@ namespace Coloriser{
 
 		void AssignUiObject (
 			std::unique_ptr<UiObject> uiObject
+		);
+
+		void AssignChildPane (
+			std::unique_ptr<Pane> childPane,
+			u32 percentOfCanvasForChild
 		);
 
 		// you need to be in raylibs drawing mode to start

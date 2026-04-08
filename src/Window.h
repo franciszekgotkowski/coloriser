@@ -17,9 +17,10 @@ namespace Coloriser {
 		Color clearColor;
 		std::string title;
 
-		std::unique_ptr<Pane> rootPane;
 
 		public:
+		std::unique_ptr<Pane> rootPane;
+
 		Window(
 			u32 width,
 			u32 height,

@@ -1,4 +1,5 @@
 #include <ButtonObject.h>
+#include <Pane.h>
 #include <UiObject.h>
 #include <Window.h>
 #include <raylib.h>
@@ -60,8 +61,15 @@ int main() {
 		"Coloriser",
 		std::make_unique<Coloriser::Pane>(
 			"BUTTON PANE",
-			std::make_unique<Coloriser::Button>()
+			std::make_unique<Coloriser::Button>("B1")
 		)
+	);
+	window.rootPane->AssignChildPane(
+		std::make_unique<Coloriser::Pane>(
+			"SECOND PANE",
+			std::make_unique<Coloriser::Button>("B2")
+		),
+		50
 	);
 	window.OpenGuiWindow();
 
