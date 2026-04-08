@@ -1,116 +1,188 @@
-#include <Pane.h>
-#include <typedefs.h>
-#include <range.h>
-
 #include <raylib.h>
 #include <raygui.h>
+#include <Pane.h>
+#include <string>
+#include <typedefs.h>
 
-Coloriser::Pane::Pane(
-    std::string name
-) {
-    this->name = name;
-}
+namespace Coloriser {
 
-Coloriser::Pane::Pane() {
-    this->x = 0;
-    this->y = 0;
-    this->widht = 0;
-    this->height = 0;
-    this->active = false;
-    this->name = "NO NAME";
-}
+	Pane::Pane(
+		u32 xPos,
+		u32 yPos,
+		u32 width,
+		u32 heigth,
+		u32 borderWidth,
+		std::string name,
+		std::unique_ptr<UiObject> uiObject
+	) {
+		this->name = name;
+
+		this->AssignUiObject(std::move(uiObject));
+		this->SetNewCoordinateVariables(
+			xPos,
+			yPos,
+			width,
+			heigth,
+			borderWidth
+		);
+	}
+
+	Pane::Pane(
+		std::string name,
+		std::unique_ptr<UiObject> uiObject
+	) : Pane(
+		0,
+		0,
+		0,
+		0,
+		0,
+		name,
+		std::move(uiObject)
+	) {}
+
+	void Pane::SetNewCoordinateVariables (
+		u32 xPos,
+		u32 yPos,
+		u32 width,
+		u32 heigth,
+		u32 borderWidth
+	) {
+		this->paneCoordinates = (CoordinateRect){
+			.xPos = xPos,
+			.yPos = yPos,
+			.width = width,
+			.height = heigth
+		};
+
+		this->canvasCoordinates = (CoordinateRect){
+			.xPos = xPos + borderWidth,
+			.yPos = yPos + borderWidth,
+			.width = width - 2 * borderWidth,
+			.height = heigth - 2 * borderWidth
+		};
+
+		CoordinateRect childCoordinates;
+		CoordinateRect uiObjectCoordinates;
+
+		if (this->childPane == nullptr) {
+			this->percentOfCanvasForChild = 0;
+			if (this->uiObject == nullptr) {
+				return;
+			}
+		}
+		if (this->childPane != nullptr) {
+			switch (this->whereIsChild) {
+				case Direction::LEFT:
+				childCoordinates = (CoordinateRect){
+					.xPos = this->canvasCoordinates.xPos,
+					.yPos = this->canvasCoordinates.yPos,
+					.width = (this->canvasCoordinates.width-borderWidth)*this->percentOfCanvasForChild/100,
+					.height = this->canvasCoordinates.height,
+				};
+				uiObjectCoordinates = {
+					.xPos = this->canvasCoordinates.xPos + borderWidth + (this->canvasCoordinates.width-borderWidth)*this->percentOfCanvasForChild/100,
+					.yPos = this->canvasCoordinates.yPos,
+					.width = (this->canvasCoordinates.width-borderWidth)*(100-this->percentOfCanvasForChild)/100,
+					.height = this->canvasCoordinates.height,
+				};
+				break;
+				case Direction::RIGHT:
+				uiObjectCoordinates = (CoordinateRect){
+					.xPos = this->canvasCoordinates.xPos,
+					.yPos = this->canvasCoordinates.yPos,
+					.width = (this->canvasCoordinates.width-borderWidth)*this->percentOfCanvasForChild/100,
+					.height = this->canvasCoordinates.height,
+				};
+				childCoordinates = {
+					.xPos = this->canvasCoordinates.xPos + borderWidth + (this->canvasCoordinates.width-borderWidth)*this->percentOfCanvasForChild/100,
+					.yPos = this->canvasCoordinates.yPos,
+					.width = (this->canvasCoordinates.width-borderWidth)*(100-this->percentOfCanvasForChild)/100,
+					.height = this->canvasCoordinates.height,
+				};
+				break;
+				case Direction::UP:
+				childCoordinates = (CoordinateRect) {
+					.xPos = this->canvasCoordinates.xPos,
+					.yPos = this->canvasCoordinates.yPos,
+					.width = this->canvasCoordinates.width,
+					.height = (this->canvasCoordinates.height-borderWidth)*this->percentOfCanvasForChild/100,
+				};
+				uiObjectCoordinates = (CoordinateRect) {
+					.xPos = this->canvasCoordinates.xPos,
+					.yPos = this->canvasCoordinates.yPos + borderWidth + (this->canvasCoordinates.height-borderWidth)*this->percentOfCanvasForChild/100,
+					.width = this->canvasCoordinates.width,
+					.height = (this->canvasCoordinates.height-borderWidth)*(100-this->percentOfCanvasForChild)/100,
+				};
+				break;
+				case Direction::DOWN:
+				uiObjectCoordinates = (CoordinateRect) {
+					.xPos = this->canvasCoordinates.xPos,
+					.yPos = this->canvasCoordinates.yPos,
+					.width = this->canvasCoordinates.width,
+					.height = (this->canvasCoordinates.height-borderWidth)*this->percentOfCanvasForChild/100,
+				};
+				childCoordinates = (CoordinateRect) {
+					.xPos = this->canvasCoordinates.xPos,
+					.yPos = this->canvasCoordinates.yPos + borderWidth + (this->canvasCoordinates.height-borderWidth)*this->percentOfCanvasForChild/100,
+					.width = this->canvasCoordinates.width,
+					.height = (this->canvasCoordinates.height-borderWidth)*(100-this->percentOfCanvasForChild)/100,
+				};
+				break;
+				default:
+				break;
+			}
+			this->childPane->SetNewCoordinateVariables(
+				childCoordinates.xPos,
+				childCoordinates.yPos,
+				childCoordinates.width,
+				childCoordinates.height,
+				borderWidth
+			);
+		} else {
+			uiObjectCoordinates = {
+				.xPos = this->canvasCoordinates.xPos,
+				.yPos = this->canvasCoordinates.yPos,
+				.width = this->canvasCoordinates.width,
+				.height = this->canvasCoordinates.height,
+			};
+		}
 
 
-Coloriser::MouseRelativePosition Coloriser::Pane::RelativeMousePosition(
-    Vector2 mousePosition
-) {
-    u32 mouseX = (u32)mousePosition.x;
-    u32 mouseY = (u32)mousePosition.y;
+		if (this->uiObject != nullptr) {
+			this->uiObject->Resize(
+				uiObjectCoordinates.xPos,
+				uiObjectCoordinates.yPos,
+				uiObjectCoordinates.width,
+				uiObjectCoordinates.height
+			);
+		}
+	}
 
-    bool relativeMousePos[3][3] = {
-        {true, true, true},
-        {true, true, true},
-        {true, true, true}
-    };
+	void Pane::AssignUiObject(
+		std::unique_ptr<UiObject> uiObject
+	) {
+		if (uiObject) {
+			this->uiObject = std::move(uiObject);
+		}
+	}
 
-    if (mouseY > this->y + this->height) {
-        // mouse below pane
-        for range(xpos, 3) {
-            relativeMousePos[0][xpos] = false;
-            relativeMousePos[1][xpos] = false;
-        }
-    }
-    else if (mouseY >= this->y) {
-        // mouse on Y level of Pane
-        for range(xpos, 3) {
-            relativeMousePos[0][xpos] = false;
-            relativeMousePos[2][xpos] = false;
-        }
-    }
-    else {
-        // mouse above pane
-        for range(xpos, 3) {
-            relativeMousePos[1][xpos] = false;
-            relativeMousePos[2][xpos] = false;
-        }
-    }
+	void Pane::Draw() {
+		GuiGroupBox(
+			(Rectangle) {
+				(f32)this->paneCoordinates.xPos,
+				(f32)this->paneCoordinates.yPos,
+				(f32)this->paneCoordinates.width,
+				(f32)this->paneCoordinates.height,
+			},
+			this->name.c_str()
+		);
 
-    if (mouseX > this->x + this->widht) {
-        // mouse right from pane
-        for range(ypos, 3) {
-            relativeMousePos[ypos][0] = false;
-            relativeMousePos[ypos][1] = false;
-        }
-    }
-    else if (mouseX >= this->x) {
-        // mouse on X level of Pane
-        for range(ypos, 3) {
-            relativeMousePos[ypos][0] = false;
-            relativeMousePos[ypos][2] = false;
-        }
-    }
-    else {
-        // mouse left from pane
-        for range(ypos, 3) {
-            relativeMousePos[ypos][1] = false;
-            relativeMousePos[ypos][2] = false;
-        }
-    }
+		if (this->uiObject) {
+			this->uiObject->Draw();
+		}
 
-    if (relativeMousePos[0][0] ||
-        relativeMousePos[0][2] ||
-        relativeMousePos[2][0] ||
-        relativeMousePos[2][2]) {
-        return MouseRelativePosition::DIAGONALL;
-    }
-
-    if (relativeMousePos[0][1]) {
-        return MouseRelativePosition::UP;
-    }
-
-    if (relativeMousePos[2][1]) {
-        return MouseRelativePosition::DOWN;
-    }
-
-    if (relativeMousePos[1][2]) {
-        return MouseRelativePosition::RIGHT;
-    }
-
-    if (relativeMousePos[1][0]) {
-        return MouseRelativePosition::LEFT;
-    }
-
-    return MouseRelativePosition::INSIDE;
-}
-
-void Coloriser::Pane::DrawOutline() {
-    GuiGroupBox(
-        (Rectangle) {
-            .x = (f32)this->x,
-            .y = (f32)this->y,
-            .width = (f32)this->widht,
-            .height = (f32)this->height
-        },
-        this->name.c_str()
-        );
+		if (this->childPane) {
+			this->childPane->Draw();
+		}
+	};
 }

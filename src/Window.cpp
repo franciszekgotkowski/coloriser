@@ -1,56 +1,54 @@
-#include <cstring>
+#include <typedefs.h>
 #include <Window.h>
-#include <range.h>
+#include <raylib.h>
+#include <utility>
 
-Coloriser::Window::Window(
-    u32 widht,
-    u32 height,
-    u32 fps,
-    Color clearColor,
-    std::string title
-) {
-    this->widht = widht;
-    this->height = height;
-    this->fps = fps;
-    this->clearColor = clearColor;
-    this->title = title;
-}
+namespace Coloriser {
 
-i32 Coloriser::Window::AddNewPane(
-    std::string name
-) {
-    if (this->amountOfPanes >= MAX_AMOUNT_OF_PANES) {
-        return -1;
-    }
+	Window::Window (
+		u32 width,
+		u32 height,
+		u32 fps,
+		Color clearColor,
+		std::string title,
+		std::unique_ptr<Pane> rootPane
+	) {
 
-    this->panes[this->amountOfPanes] = Pane(
-        name
-    );
-    this->amountOfPanes++;
-    return this->amountOfPanes - 1;
-}
+		this->borderWidth = (width + height) / 200;
 
-void Coloriser::Window::InitializeGuiWindow() {
-    InitWindow(
-        this->widht,
-        this->height,
-        this->title.c_str()
-    );
+		this->width = width;
+		this->height = height;
+		this->fps = fps;
+		this->clearColor = clearColor;
+		this->title = title;
 
-    SetTargetFPS(this->fps);
-}
+		if (rootPane) {
+			this->rootPane = std::move(rootPane);
+		}
+		this->rootPane->SetNewCoordinateVariables(
+			borderWidth,
+			borderWidth,
+			this->width - 2 * borderWidth,
+			this->height - 2 * borderWidth,
+			this->borderWidth
+		);
+	}
 
-void Coloriser::Window::RenderLoop() {
-    while (!this->shouldClose) {
-        BeginDrawing();
+	void Window::OpenGuiWindow() {
+		InitWindow(
+			this->width,
+			this->height,
+			this->title.c_str()
+		);
+		SetTargetFPS(this->fps);
+	}
 
-        ClearBackground(this->clearColor);
-
-        for range(i, this->amountOfPanes) {
-            this->panes[i].DrawOutline();
-        }
-
-        EndDrawing();
-        this->shouldClose = WindowShouldClose();
-    }
+	void Window::DrawProgram() {
+		BeginDrawing();
+		ClearBackground(this->clearColor);
+		if (this->rootPane) {
+			this->rootPane->Draw();
+		}
+		EndDrawing();
+	}
 }

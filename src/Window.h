@@ -1,53 +1,38 @@
 #pragma once
 
+#include <raylib.h>
 #include <typedefs.h>
 #include <Pane.h>
+#include <memory>
 
 namespace Coloriser {
-#define MAX_AMOUNT_OF_PANES 10
 
-    class Window {
-    public:
-        Pane panes[MAX_AMOUNT_OF_PANES];
-        u32 amountOfPanes = 0;
+	class Window {
+		u32 width;
+		u32 height;
+		u32 fps;
 
-        std::string title;
+		u32 borderWidth;
 
-        u32 widht;
-        u32 height;
-        u32 fps;
-        Color clearColor;
+		Color clearColor;
+		std::string title;
 
-        bool shouldClose = false;
+		std::unique_ptr<Pane> rootPane;
 
-        u32 borderThickness = (widht + height) / 200;
+		public:
+		Window(
+			u32 width,
+			u32 height,
+			u32 fps,
+			Color clearColor,
+			std::string name,
+			std::unique_ptr<Pane> rootPane = nullptr
+		);
 
-        Window(
-            u32 widht,
-            u32 height,
-            u32 fps,
-            Color clearColor,
-            std::string title
-        );
+		void OpenGuiWindow();
 
-        // returns index of this pane
-        i32 AddNewPane(
-            std::string name
-        );
+		void DrawProgram();
 
-        // Connections are placed in square grid with the size of MAX_AMOUNT_OF_PANES
-        // Only top right triangle will be looked at because connections are 2 directional
-        //    0  1  2  3 x
-        // 0  0  1  0  0
-        // 1  0  1  1  0
-        // 2  0  0  0  0
-        // 3  0  0  0  0
-        // y
-        // This means that
-        void LoadInPaneConnections(bool* connections);
+	};
 
-        void InitializeGuiWindow();
-
-        void RenderLoop();
-    };
 }

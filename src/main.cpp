@@ -1,9 +1,10 @@
+#include <ButtonObject.h>
+#include <UiObject.h>
+#include <Window.h>
 #include <raylib.h>
 #include <rlgl.h>
-
 #include <typedefs.h>
-
-#include <Window.h>
+#include <memory>
 
 typedef struct {
     Vector3 position;
@@ -51,22 +52,20 @@ void Draw3dTriangle(Triangle triangle) {
 }
 
 int main() {
-    Coloriser::Window MainWindow = Coloriser::Window(
-        800,
-        600,
-        60,
-        RAYWHITE,
-        "Coloriser");
+	Coloriser::Window window = Coloriser::Window(
+		800,
+		600,
+		60,
+		RAYWHITE,
+		"Coloriser",
+		std::make_unique<Coloriser::Pane>(
+			"BUTTON PANE",
+			std::make_unique<Coloriser::Button>()
+		)
+	);
+	window.OpenGuiWindow();
 
-    MainWindow.InitializeGuiWindow();
-
-    MainWindow.AddNewPane("The Cube");
-    MainWindow.AddNewPane("Settings");
-    MainWindow.AddNewPane("Image");
-
-
-
-    MainWindow.RenderLoop();
-
-    return 0;
+	while (!WindowShouldClose()) {
+		window.DrawProgram();
+	}
 }

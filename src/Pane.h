@@ -1,61 +1,66 @@
 #pragma once
 
-#include <typedefs.h>
 #include <raylib.h>
-#include <PaneContents.h>
-
 #include <string>
+#include <typedefs.h>
+#include <UiObject.h>
 #include <memory>
 
-namespace Coloriser {
-    enum class PaneNeighbour {
-        LEFT,
-        RIGHT,
-        UP,
-        DOWN,
+namespace Coloriser{
+	enum class Direction {
+		LEFT,
+		RIGHT,
+		UP,
+		DOWN,
 
-        AMOUNT_OF_DIRECTIONS
-    };
+		UNKNOWN,
 
-    enum class MouseRelativePosition {
-        INSIDE,
-        LEFT,
-        RIGHT,
-        UP,
-        DOWN,
-        DIAGONALL,
+		AMOUNT_OF_DIRECTIONS
+	};
 
-        AMOUNT_OF_DIRECTIONS
-    };
+	class Pane {
+		CoordinateRect paneCoordinates;
+		CoordinateRect canvasCoordinates;
 
-    class Pane {
-    public:
-        std::string name;
+		std::string name;
 
-        u32 x = 0;
-        u32 y = 0;
-        u32 widht = 0;
-        u32 height = 0;
+		std::unique_ptr<UiObject> uiObject;
 
-        i8 leftNeighbourIdx = -1;
-        i8 rightNeighbourIdx = -1;
-        i8 upperNeighbourIdx = -1;
-        i8 belowNeighbourIdx = -1;
+		u32 percentOfCanvasForChild = 50;
+		Direction whereIsChild = Direction::UNKNOWN;
+		std::unique_ptr<Pane> childPane;
 
-        bool active = false; // this field is to tell if object have been activated or is it just an array filler
+		public:
+		Pane(
+			u32 xPos = 0,
+			u32 yPos = 0,
+			u32 width = 0,
+			u32 heigth = 0,
+			u32 borderWidth = 0,
+			std::string name = "ERROR: NO NAME",
+			std::unique_ptr<UiObject> uiObject = nullptr
+		);
 
-        Pane(
-            std::string name
-        );
+		Pane(
+			std::string name,
+			std::unique_ptr<UiObject> uiObject
+		);
 
-        Pane();
+		// If there is some window resize or function initialization this function will be called
+		// It (based on the data it recieved) sets new coordinates for position and child width and height. This function will be used recursively for updating UI
+		void SetNewCoordinateVariables (
+			u32 xPos,
+			u32 yPos,
+			u32 width,
+			u32 heigth,
+			u32 borderWidth
+		);
 
-        MouseRelativePosition RelativeMousePosition(
-            Vector2 mousePosition
-        );
+		void AssignUiObject (
+			std::unique_ptr<UiObject> uiObject
+		);
 
-        void DrawOutline();
-
-        std::unique_ptr<Coloriser::PaneContents> contents;
-    };
+		// you need to be in raylibs drawing mode to start
+		void Draw();
+	};
 }
