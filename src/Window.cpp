@@ -35,6 +35,7 @@ namespace Coloriser {
 	}
 
 	void Window::OpenGuiWindow() {
+		SetConfigFlags(FLAG_WINDOW_HIGHDPI);
 		InitWindow(
 			this->width,
 			this->height,

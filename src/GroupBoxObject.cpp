@@ -7,12 +7,14 @@ namespace Coloriser {
         u32 xPos,
         u32 yPos,
         u32 width,
-        u32 height
+        u32 height,
+        u32 borderWidth
     ) : UiObject(
         xPos,
         yPos,
         width,
-        height
+        height,
+        borderWidth
     ) {
     }
 
@@ -40,7 +42,8 @@ namespace Coloriser {
             this->canvasCoordinates.xPos,
             this->canvasCoordinates.yPos,
             this->canvasCoordinates.width,
-            this->canvasCoordinates.height
+            this->canvasCoordinates.height,
+            borderWidth
         );
     }
 
@@ -51,6 +54,30 @@ namespace Coloriser {
         );
         if (this->guiObject) {
             this->guiObject->Draw();
+        }
+    }
+
+    void GroupBox::Resize(
+        u32 xPos,
+        u32 yPos,
+        u32 width,
+        u32 height,
+        u32 borderWidth
+    ) {
+        this->coordinates = (CoordinateRect){
+            .xPos = xPos,
+            .yPos = yPos,
+            .width = width,
+            .height = height
+        };
+        if (this->guiObject) {
+            this->guiObject->Resize(
+                xPos + borderWidth,
+                yPos + borderWidth,
+                width - 2 * borderWidth,
+                height - 2 * borderWidth,
+                borderWidth
+            );
         }
     }
 }

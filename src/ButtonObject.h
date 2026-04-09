@@ -15,7 +15,8 @@ namespace Coloriser {
 			u32 xPos = 0,
 			u32 yPos = 0,
 			u32 width = 0,
-			u32 heigh = 0
+			u32 heigh = 0,
+			u32 borderWidth = 0
 		);
 
 		Button(

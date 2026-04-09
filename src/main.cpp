@@ -82,16 +82,14 @@ int main() {
                 "B3",
                 std::make_unique<Coloriser::Button>("New Button"),
                 window.borderWidth
-                )
-            ),
-            80,
-            Coloriser::Direction::RIGHT
-        );
+            )
+        ),
+        80,
+        Coloriser::Direction::RIGHT
+    );
     window.OpenGuiWindow();
 
     while (!WindowShouldClose()) {
-        window.rootPane->percentOfCanvasForChild = 50 + (u32) 10 * sin(GetTime());
-        window.rootPane->childPane->percentOfCanvasForChild = 30 + (u32) 20 * cos(GetTime());
         window.rootPane->ResetCoordinateVariables();
         window.DrawProgram();
     }

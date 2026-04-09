@@ -20,6 +20,8 @@ target_compile_options(coloriser PRIVATE
 		-Wextra
 		-Wall
 		-Werror
+		-Wno-unused-parameter
+		-Wno-shadow
 		$<$<CONFIG:Debug>:-g -O0 -pg>
 		$<$<CONFIG:Release>:-O3 -Wno-unused-but-set-variable -Wno-unused-variable>
 )

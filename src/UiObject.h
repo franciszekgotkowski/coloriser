@@ -13,14 +13,16 @@ namespace Coloriser {
 			u32 xPos,
 			u32 yPos,
 			u32 width,
-			u32 height
+			u32 height,
+			u32 borderWidth
 		);
 
-		void Resize(
+		virtual void Resize(
 			u32 xPos,
 			u32 yPos,
 			u32 width,
-			u32 height
+			u32 height,
+			u32 borderWidth
 		);
 		virtual void Draw() = 0;
 	};

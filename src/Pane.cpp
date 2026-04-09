@@ -61,14 +61,7 @@ namespace Coloriser {
             .width = width,
             .height = heigth
         };
-        //
-        // this->canvasCoordinates = (CoordinateRect){
-        //     .xPos = xPos + borderWidth,
-        //     .yPos = yPos + borderWidth,
-        //     .width = width - 2 * borderWidth,
-        //     .height = heigth - 2 * borderWidth
-        // };
-        //
+
         this->borderWidth = borderSize;
 
         CoordinateRect childCoordinates;
@@ -163,7 +156,8 @@ namespace Coloriser {
                 uiObjectCoordinates.xPos,
                 uiObjectCoordinates.yPos,
                 uiObjectCoordinates.width,
-                uiObjectCoordinates.height
+                uiObjectCoordinates.height,
+                this->borderWidth
             );
         }
     }
