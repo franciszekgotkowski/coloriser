@@ -1,11 +1,14 @@
 #include <ButtonObject.h>
+#include <GroupBoxObject.h>
 #include <Pane.h>
-#include <UiObject.h>
 #include <Window.h>
 #include <raylib.h>
 #include <rlgl.h>
 #include <typedefs.h>
 #include <memory>
+#include <math.h>
+
+#include "GroupBoxObject.h"
 
 typedef struct {
     Vector3 position;
@@ -14,9 +17,9 @@ typedef struct {
 
 Vector3 ColorToPosition(Color col) {
     return (Vector3){
-        .x = ((f32)col.r / 255.0f) - 0.5f,
-        .y = ((f32)col.g / 255.0f) - 0.5f,
-        .z = ((f32)col.b / 255.0f) - 0.5f,
+        .x = ((f32) col.r / 255.0f) - 0.5f,
+        .y = ((f32) col.g / 255.0f) - 0.5f,
+        .z = ((f32) col.b / 255.0f) - 0.5f,
     };
 }
 
@@ -31,7 +34,7 @@ typedef union {
 } Triangle;
 
 
-void updatePosition(Triangle* tri) {
+void updatePosition(Triangle *tri) {
     tri->e1.position = ColorToPosition(tri->e1.color);
     tri->e2.position = ColorToPosition(tri->e2.color);
     tri->e3.position = ColorToPosition(tri->e3.color);
@@ -53,27 +56,43 @@ void Draw3dTriangle(Triangle triangle) {
 }
 
 int main() {
-	Coloriser::Window window = Coloriser::Window(
-		800,
-		600,
-		60,
-		RAYWHITE,
-		"Coloriser",
-		std::make_unique<Coloriser::Pane>(
-			"BUTTON PANE",
-			std::make_unique<Coloriser::Button>("B1")
-		)
-	);
-	window.rootPane->AssignChildPane(
-		std::make_unique<Coloriser::Pane>(
-			"SECOND PANE",
-			std::make_unique<Coloriser::Button>("B2")
-		),
-		50
-	);
-	window.OpenGuiWindow();
+    Coloriser::Window window = Coloriser::Window(
+        800,
+        600,
+        60,
+        RAYWHITE,
+        "Coloriser",
+        std::make_unique<Coloriser::Pane>(
+            "BUTTON PANE",
+            std::make_unique<Coloriser::Button>("B1")
+        )
+    );
+    window.rootPane->AssignChildPane(
+        std::make_unique<Coloriser::Pane>(
+            "SECOND PANE",
+            std::make_unique<Coloriser::Button>("B2")
+        ),
+        50,
+        Coloriser::Direction::DOWN
+    );
+    window.rootPane->childPane->AssignChildPane(
+        std::make_unique<Coloriser::Pane>(
+            "THIRD PANE",
+            std::make_unique<Coloriser::GroupBox>(
+                "B3",
+                std::make_unique<Coloriser::Button>("New Button"),
+                window.borderWidth
+                )
+            ),
+            80,
+            Coloriser::Direction::RIGHT
+        );
+    window.OpenGuiWindow();
 
-	while (!WindowShouldClose()) {
-		window.DrawProgram();
-	}
+    while (!WindowShouldClose()) {
+        window.rootPane->percentOfCanvasForChild = 50 + (u32) 10 * sin(GetTime());
+        window.rootPane->childPane->percentOfCanvasForChild = 30 + (u32) 20 * cos(GetTime());
+        window.rootPane->ResetCoordinateVariables();
+        window.DrawProgram();
+    }
 }

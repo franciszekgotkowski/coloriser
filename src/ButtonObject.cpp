@@ -27,9 +27,9 @@ namespace Coloriser {
 	void Button::Draw() {
 		if ( GuiButton(
 			this->coordinates.RlRect(),
-			"Click me!"
+			this->text.c_str()
 		)) {
-			std::cout << "clicked!\n" ;
+			std::cout << "clicked!\t" << this->text << std::endl ;
 		}
 	}
 

@@ -12,13 +12,13 @@ namespace Coloriser {
 		u32 height;
 		u32 fps;
 
-		u32 borderWidth;
 
 		Color clearColor;
 		std::string title;
 
 
 		public:
+		u32 borderWidth;
 		std::unique_ptr<Pane> rootPane;
 
 		Window(

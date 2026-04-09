@@ -28,15 +28,14 @@ namespace Coloriser{
 
 		u32 borderWidth;
 
-		u32 percentOfCanvasForChild = 50;
 		Direction whereIsChild = Direction::UNKNOWN;
-		std::unique_ptr<Pane> childPane;
 
 
 		// this function runs SetNewCoordinateVariables with the its data so it can correct its dividing after adding new element
-		void ResetCoordinateVariables();
 
 		public:
+		std::unique_ptr<Pane> childPane;
+		u32 percentOfCanvasForChild = 50;
 		Pane(
 			u32 xPos = 0,
 			u32 yPos = 0,
@@ -52,6 +51,8 @@ namespace Coloriser{
 			std::unique_ptr<UiObject> uiObject
 		);
 
+		std::unique_ptr<Pane> GetChildPane();
+
 		// If there is some window resize or function initialization this function will be called
 		// It (based on the data it recieved) sets new coordinates for position and child width and height. This function will be used recursively for updating UI
 		void SetNewCoordinateVariables (
@@ -59,16 +60,19 @@ namespace Coloriser{
 			u32 yPos,
 			u32 width,
 			u32 heigth,
-			u32 borderWidth
+			u32 borderSize
 		);
 
+		void ResetCoordinateVariables();
+
 		void AssignUiObject (
-			std::unique_ptr<UiObject> uiObject
+			std::unique_ptr<UiObject> newUiObject
 		);
 
 		void AssignChildPane (
-			std::unique_ptr<Pane> childPane,
-			u32 percentOfCanvasForChild
+			std::unique_ptr<Pane> childPanePtr,
+			u32 canvasPercentForCHild,
+			Direction childLocation
 		);
 
 		// you need to be in raylibs drawing mode to start
