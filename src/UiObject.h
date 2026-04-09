@@ -24,6 +24,7 @@ namespace Coloriser {
 			u32 height,
 			u32 borderWidth
 		);
+
 		virtual void Draw() = 0;
 	};
 

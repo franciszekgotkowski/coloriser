@@ -6,9 +6,8 @@
 #include <rlgl.h>
 #include <typedefs.h>
 #include <memory>
-#include <math.h>
 
-#include "GroupBoxObject.h"
+#include "CubeCanvasObject.h"
 
 typedef struct {
     Vector3 position;
@@ -80,7 +79,10 @@ int main() {
             "THIRD PANE",
             std::make_unique<Coloriser::GroupBox>(
                 "B3",
-                std::make_unique<Coloriser::Button>("New Button"),
+                std::make_unique<Coloriser::CubeCanvas>(
+                    Coloriser::ColorisingMethod::PLANE,
+                    3
+                    ),
                 window.borderWidth
             )
         ),
@@ -88,9 +90,9 @@ int main() {
         Coloriser::Direction::RIGHT
     );
     window.OpenGuiWindow();
+    window.rootPane->ResetCoordinateVariables();
 
     while (!WindowShouldClose()) {
-        window.rootPane->ResetCoordinateVariables();
         window.DrawProgram();
     }
 }

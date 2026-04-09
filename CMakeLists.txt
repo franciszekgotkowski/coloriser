@@ -4,9 +4,7 @@ project(coloriser)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-add_executable(coloriser
-		src/GroupBoxObject.cpp
-		src/GroupBoxObject.h)
+add_executable(coloriser)
 
 set(CMAKE_CONFIGURATION_TYPES
 		Debug
@@ -27,14 +25,15 @@ target_compile_options(coloriser PRIVATE
 )
 
 target_sources(coloriser PRIVATE
-		src/main.cpp
-		src/Window.cpp
-		src/Pane.cpp
-		src/UiObject.cpp
 		src/ButtonObject.cpp
 		src/CoordinateRect.cpp
+		src/CubeCanvasObject.cpp
 		src/GroupBoxObject.cpp
+		src/main.cpp
+		src/Pane.cpp
 		src/raygui_implementation.cpp
+		src/UiObject.cpp
+		src/Window.cpp
 )
 
 target_include_directories(coloriser

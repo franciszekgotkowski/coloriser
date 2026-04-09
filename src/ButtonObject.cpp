@@ -16,8 +16,7 @@ namespace Coloriser {
         width,
         height,
         borderWidth
-    ) {
-    }
+    ) {}
 
     Button::Button(
         std::string text
