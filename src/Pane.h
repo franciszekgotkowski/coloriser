@@ -24,7 +24,6 @@ namespace Coloriser{
 
 		std::string name;
 
-		std::unique_ptr<UiObject> uiObject;
 
 		u32 borderWidth;
 
@@ -35,6 +34,7 @@ namespace Coloriser{
 
 		public:
 		std::unique_ptr<Pane> childPane;
+		std::unique_ptr<UiObject> uiObject;
 		u32 percentOfCanvasForChild = 50;
 		Pane(
 			u32 xPos = 0,

@@ -52,4 +52,10 @@ namespace Coloriser {
 		}
 		EndDrawing();
 	}
+
+	void Window::UpdatePanesToNewSizes() {
+		if (this->rootPane) {
+			this->rootPane->ResetCoordinateVariables();
+		}
+	}
 }

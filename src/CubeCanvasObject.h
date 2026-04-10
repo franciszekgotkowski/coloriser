@@ -7,16 +7,22 @@
 #include <raylib.h>
 
 namespace Coloriser {
-
     class CubeCanvas : public UiObject {
         ColorisingMethod colorisingMethod;
-        std::vector<Color> colors;
 
         Color clearColor = RAYWHITE;
         RenderTexture2D renderTexture;
         bool renderTextureExists = false;
+
+        Vector3 cubeLocation = {
+            0.0f,
+            0.0f,
+            0.0f
+        };
+        f32 cubeSize = 1.0f;
+
         Camera camera = {
-            .position ={
+            .position = {
                 3.0f,
                 2.0f,
                 3.0f
@@ -31,8 +37,25 @@ namespace Coloriser {
             .projection = CAMERA_PERSPECTIVE
         };
 
+        Vector3 rgbToCubePosition(
+            Color color
+        );
+
+        Vector2 GetWorldScreenForCurrentRenderTexture(
+            Vector3 location
+        );
+
         void DrawJustCube();
+
+        void DrawColorDots();
+
+        void DrawDot(
+            Color color,
+            Vector3 location
+        );
+
         void DrawPlane();
+
         void DrawSphere();
 
         CubeCanvas(
@@ -44,6 +67,8 @@ namespace Coloriser {
         );
 
     public:
+        std::vector<Color> colors;
+
         CubeCanvas(
             ColorisingMethod method,
             u32 amountOfColors

@@ -32,6 +32,9 @@ namespace Coloriser {
 
 		void OpenGuiWindow();
 
+		// after pane percentages for children are changed run this to update all panes
+		void UpdatePanesToNewSizes();
+
 		void DrawProgram();
 
 	};

@@ -5,6 +5,7 @@
 #include <raylib.h>
 #include <rlgl.h>
 #include <typedefs.h>
+#include <math.h>
 #include <memory>
 
 #include "CubeCanvasObject.h"
@@ -71,7 +72,7 @@ int main() {
             "SECOND PANE",
             std::make_unique<Coloriser::Button>("B2")
         ),
-        50,
+        30,
         Coloriser::Direction::DOWN
     );
     window.rootPane->childPane->AssignChildPane(
@@ -86,13 +87,15 @@ int main() {
                 window.borderWidth
             )
         ),
-        80,
+        50,
         Coloriser::Direction::RIGHT
     );
     window.OpenGuiWindow();
     window.rootPane->ResetCoordinateVariables();
 
     while (!WindowShouldClose()) {
+        // window.rootPane->childPane->percentOfCanvasForChild = 75 + 15*sin(GetTime());
+        // window.UpdatePanesToNewSizes();
         window.DrawProgram();
     }
 }
