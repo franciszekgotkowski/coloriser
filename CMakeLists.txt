@@ -34,6 +34,7 @@ target_sources(coloriser PRIVATE
 		src/raygui_implementation.cpp
 		src/UiObject.cpp
 		src/Window.cpp
+		src/ColorPool.cpp
 )
 
 target_include_directories(coloriser

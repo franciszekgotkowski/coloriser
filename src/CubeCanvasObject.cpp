@@ -45,7 +45,7 @@ namespace Coloriser {
 
         if (this->colorisingMethod == ColorisingMethod::PLANE) {
             this->SetNewAmountOfColors(3);
-            this->colors[0] = RAYWHITE;
+            this->colors[0] = MAROON;
             this->colors[1] = PINK;
             this->colors[2] = BROWN;
         } else if (this->colorisingMethod == ColorisingMethod::SPHERE) {
@@ -107,12 +107,12 @@ namespace Coloriser {
     }
 
     void CubeCanvas::DrawJustCube() {
-        DrawCube(
+        DrawCubeWires(
             this->cubeLocation,
             this->cubeSize,
             this->cubeSize,
             this->cubeSize,
-            RED
+            GRAY
         );
     }
 
@@ -138,7 +138,7 @@ namespace Coloriser {
 
         DrawCircleV(
             screenspacePosition,
-            (f32) ((this->renderTexture.texture.width + this->renderTexture.texture.width) / 100 + 1),
+            (f32) ((this->renderTexture.texture.width + this->renderTexture.texture.width) / 100 + 2),
             BLACK
         );
         DrawCircleV(
