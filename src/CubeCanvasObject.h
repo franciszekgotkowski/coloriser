@@ -8,8 +8,6 @@
 
 namespace Coloriser {
     class CubeCanvas : public UiObject {
-        ColorisingMethod colorisingMethod;
-
         Color clearColor = RAYWHITE;
         RenderTexture2D renderTexture;
         bool renderTextureExists = false;
@@ -68,6 +66,8 @@ namespace Coloriser {
 
     public:
         std::vector<Color> colors;
+        ColorisingMethod colorisingMethod;
+
 
         CubeCanvas(
             ColorisingMethod method,
