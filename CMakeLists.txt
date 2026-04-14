@@ -21,7 +21,8 @@ target_compile_options(coloriser PRIVATE
 		-Wno-unused-parameter
 		-Wno-shadow
 		-Wno-missing-field-initializers
-		$<$<CONFIG:Debug>:-g -O0 -pg>
+		$<$<CONFIG:Debug>:-g -O0>
+#		$<$<CONFIG:Debug>:-g -O0 -pg>
 		$<$<CONFIG:Release>:-O3 -Wno-unused-but-set-variable -Wno-unused-variable>
 )
 
@@ -50,6 +51,10 @@ target_include_directories(coloriser
 
 target_link_libraries( coloriser PRIVATE
 		raylib
+
+		-static
+		-static-libgcc
+		-static-libstdc++
 )
 
 add_subdirectory( libs/raylib )
