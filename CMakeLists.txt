@@ -20,6 +20,7 @@ target_compile_options(coloriser PRIVATE
 		-Werror
 		-Wno-unused-parameter
 		-Wno-shadow
+		-Wno-missing-field-initializers
 		$<$<CONFIG:Debug>:-g -O0 -pg>
 		$<$<CONFIG:Release>:-O3 -Wno-unused-but-set-variable -Wno-unused-variable>
 )
@@ -32,9 +33,11 @@ target_sources(coloriser PRIVATE
 		src/main.cpp
 		src/Pane.cpp
 		src/raygui_implementation.cpp
+		src/raymath_implementation.cpp
 		src/UiObject.cpp
 		src/Window.cpp
 		src/ColorPool.cpp
+		src/Matrix3x3.cpp
 )
 
 target_include_directories(coloriser

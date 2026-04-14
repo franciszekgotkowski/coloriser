@@ -1,9 +1,10 @@
 #pragma once
 
+#include <ColorPool.h>
 #include <UiObject.h>
+#include <memory>
 #include <typedefs.h>
 #include <ColorisingMethod.h>
-#include <vector>
 #include <raylib.h>
 
 namespace Coloriser {
@@ -39,7 +40,7 @@ namespace Coloriser {
             Color color
         );
 
-        Vector2 GetWorldScreenForCurrentRenderTexture(
+        Vector2 GetWorldToScreenForCurrentRenderTexture(
             Vector3 location
         );
 
@@ -65,13 +66,15 @@ namespace Coloriser {
         );
 
     public:
-        std::vector<Color> colors;
-        ColorisingMethod colorisingMethod;
+        // std::vector<Color> colors;
+        // ColorisingMethod colorisingMethod;
+        std::shared_ptr<ColorPool> colorPool;
 
 
         CubeCanvas(
             ColorisingMethod method,
-            u32 amountOfColors
+            u32 amountOfColors,
+            std::shared_ptr<ColorPool> colorPool
         );
 
         // if method is plane amountOfColors will not be taken into acount because always 3 colors will be needed

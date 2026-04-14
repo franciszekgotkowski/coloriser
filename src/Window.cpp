@@ -2,6 +2,7 @@
 #include <Window.h>
 #include <raylib.h>
 #include <utility>
+#include <rlgl.h>
 
 namespace Coloriser {
 
@@ -13,7 +14,6 @@ namespace Coloriser {
 		std::string title,
 		std::unique_ptr<Pane> rootPane
 	) {
-
 		this->borderWidth = (width + height) / 200;
 
 		this->width = width;
@@ -41,6 +41,8 @@ namespace Coloriser {
 			this->height,
 			this->title.c_str()
 		);
+		rlDisableBackfaceCulling();
+
 		SetTargetFPS(this->fps);
 	}
 

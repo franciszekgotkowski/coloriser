@@ -7,8 +7,6 @@
 
 namespace Coloriser {
     class ColorPool {
-        std::vector<Color> colors;
-        ColorisingMethod colorisingMethod;
 
         Color PlaneFilter(
             Color color
@@ -19,16 +17,19 @@ namespace Coloriser {
         );
 
     public:
+    	std::vector<Color> colors;
+     	ColorisingMethod colorisingMethod;
+
         ColorPool(
             ColorisingMethod colorisingMethod,
-            u32 amountOfColors
+            u32 amountOfColors = 3
         );
 
         void SetNewColorisingMethod(
             ColorisingMethod colorisingMethod
         );
 
-        void SetNewAmountOfColord(
+        void SetNewAmountOfColors(
             u32 amountOfColors
         );
 
@@ -37,11 +38,14 @@ namespace Coloriser {
         );
 
         void SetColor(
-            Color color
+            Color color,
+            u32 idx
         );
 
         Color RunColorisingFilter(
             Color color
         );
+
     };
+
 }

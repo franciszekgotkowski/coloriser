@@ -1,14 +1,20 @@
 #include <ButtonObject.h>
+#include <ColorPool.h>
+#include <ColorisingMethod.h>
 #include <GroupBoxObject.h>
+#include <Matrix3x3.h>
 #include <Pane.h>
 #include <Window.h>
+#include <cstdio>
 #include <raylib.h>
 #include <rlgl.h>
 #include <typedefs.h>
 #include <math.h>
 #include <memory>
+#include <raymath.h>
 
-#include "CubeCanvasObject.h"
+#include <CubeCanvasObject.h>
+#include <ColorPool.h>
 
 typedef struct {
     Vector3 position;
@@ -67,6 +73,19 @@ int main() {
             std::make_unique<Coloriser::Button>("B1")
         )
     );
+
+    Coloriser::Matrix3x3 m = Coloriser::NewMatrix(
+    	(Vector3) {0.0f, 1.0f, 2.0f},
+    	(Vector3) {3.0f, 4.0f, 5.0f},
+    	(Vector3) {6.0f, 7.0f, 8.0f}
+    );
+    Coloriser::printMatrix(m);
+    Coloriser::printMatrix(Coloriser::TransposeMatrix(m));
+
+    std::shared_ptr<Coloriser::ColorPool> colors = std::make_shared<Coloriser::ColorPool>(
+   	Coloriser::ColorisingMethod::PLANE
+    );
+
     window.rootPane->AssignChildPane(
         std::make_unique<Coloriser::Pane>(
             "SECOND PANE",
@@ -82,7 +101,8 @@ int main() {
                 "B3",
                 std::make_unique<Coloriser::CubeCanvas>(
                     Coloriser::ColorisingMethod::PLANE,
-                    3
+                    3,
+                    colors
                     ),
                 window.borderWidth
             )
@@ -94,8 +114,11 @@ int main() {
     window.rootPane->ResetCoordinateVariables();
 
     while (!WindowShouldClose()) {
-        // window.rootPane->childPane->percentOfCanvasForChild = 75 + 15*sin(GetTime());
-        // window.UpdatePanesToNewSizes();
+        // colors->colors[0].r = 100 + 100 * sin(2*GetTime());
+        // colors->colors[0].b = 150 + 50 * cos(2*GetTime());
+
+        // colors->colors[1].g = 128 + 127 * cos(GetTime());
+
         window.DrawProgram();
     }
 }
