@@ -38,6 +38,7 @@ target_sources(coloriser PRIVATE
 		src/Window.cpp
 		src/ColorPool.cpp
 		src/Matrix3x3.cpp
+		src/v3.cpp
 )
 
 target_include_directories(coloriser

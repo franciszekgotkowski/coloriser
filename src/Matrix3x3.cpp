@@ -91,21 +91,23 @@ namespace Coloriser {
 		Vector3 v,
 		bool* success
 	) {
-		v3 vec = makev3(v);
+		// v3 vec = makev3(v);
 
-		for range(y, 3) {
-			if (m.arr[y].arr[y] == 0.0f) {
-				u32 idx = (y+1)%3;
-				m.arr[y] = AddVectors(m.arr[y], m.arr[idx]);
-				vec.arr[y] += vec.arr[idx];
-			}
-			for range(yy, 2-y) {
-				u32 odejmujaca = y;
-				u32 odejmowana = y + yy;
+		// for range(y, 3) {
+		// 	if (m.arr[y].arr[y] == 0.0f) {
+		// 		u32 idx = (y+1)%3;
+		// 		m.arr[y] = AddVectors(m.arr[y], m.arr[idx]);
+		// 		vec.arr[y] += vec.arr[idx];
+		// 	}
+		// 	for range(yy, 2-y) {
+		// 		u32 odejmujaca = y;
+		// 		u32 odejmowana = y + yy;
 
-				f32 dzielnik =
-			}
-		}
+		// 		f32 dzielnik =
+		// 	}
+		// }
+		//
+		return (Vector3){};
 	}
 
 	void printMatrix(
