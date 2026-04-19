@@ -41,6 +41,10 @@ namespace Coloriser {
 		Matrix3x3 m
 	);
 
+	Matrix3x3 InvertMatrix(
+		Matrix3x3 m
+	);
+
 	Vector3 SolveMatrix(
 		Matrix3x3 m,
 		Vector3 v,
@@ -51,4 +55,8 @@ namespace Coloriser {
 		Matrix3x3 m
 	);
 
+	void printSolutionMatrix(
+		Matrix3x3 m,
+		v3 v
+	);
 }

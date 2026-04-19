@@ -15,6 +15,7 @@
 
 #include <CubeCanvasObject.h>
 #include <ColorPool.h>
+#include <v3.h>
 
 typedef struct {
     Vector3 position;
@@ -74,16 +75,36 @@ int main() {
         )
     );
 
-    Coloriser::Matrix3x3 m = Coloriser::NewMatrix(
-    	(Vector3) {0.0f, 1.0f, 2.0f},
-    	(Vector3) {3.0f, 4.0f, 5.0f},
-    	(Vector3) {6.0f, 7.0f, 8.0f}
+    Coloriser::Matrix3x3 m1 = Coloriser::NewMatrix(
+        (Vector3){1.0f, 0.0f, 2.0f},
+        (Vector3){0.0f, 1.0f, 0.0f},
+        (Vector3){3.0f, 0.0f, 7.0f}
     );
-    Coloriser::printMatrix(m);
-    Coloriser::printMatrix(Coloriser::TransposeMatrix(m));
+    Coloriser::printMatrix(m1);
+    Coloriser::printMatrix(
+        Coloriser::InvertMatrix(m1)
+    );
+    Coloriser::Matrix3x3 m2 = Coloriser::NewMatrix(
+        (Vector3){1.0f, 2.0f, 3.0f},
+        (Vector3){0.0f, 1.0f, 4.0f},
+        (Vector3){0.0f, 0.0f, 1.0f}
+    );
+    Coloriser::printMatrix(m2);
+    Coloriser::printMatrix(
+        Coloriser::InvertMatrix(m2)
+    );
+    Coloriser::Matrix3x3 m3 = Coloriser::NewMatrix(
+        (Vector3){1.0f, 2.0f, 1.0f},
+        (Vector3){2.0f, 5.0f, 2.0f},
+        (Vector3){1.0f, 2.0f, 2.0f}
+    );
+    Coloriser::printMatrix(m3);
+    Coloriser::printMatrix(
+        Coloriser::InvertMatrix(m3)
+    );
 
     std::shared_ptr<Coloriser::ColorPool> colors = std::make_shared<Coloriser::ColorPool>(
-   	Coloriser::ColorisingMethod::PLANE
+        Coloriser::ColorisingMethod::PLANE
     );
 
     window.rootPane->AssignChildPane(
@@ -103,7 +124,7 @@ int main() {
                     Coloriser::ColorisingMethod::PLANE,
                     3,
                     colors
-                    ),
+                ),
                 window.borderWidth
             )
         ),

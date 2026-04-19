@@ -65,6 +65,8 @@ namespace Coloriser {
             u32 borderWidth = 0
         );
 
+        std::array<Vector3, 4> GetCubePoints();
+
     public:
         // std::vector<Color> colors;
         // ColorisingMethod colorisingMethod;
