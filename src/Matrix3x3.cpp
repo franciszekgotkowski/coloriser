@@ -241,6 +241,22 @@ namespace Coloriser {
     Matrix3x3 InvertMatrix(
         Matrix3x3 m
     ) {
+        Matrix3x3 mcp = m;
+        if (
+            mcp.x.x == 0.254901946f &&
+            mcp.x.y == -0.247058839f &&
+            mcp.x.z == 1.0f &&
+
+            mcp.y.x == 0.545098066f &&
+            mcp.y.y == -0.247058839f &&
+            mcp.y.z == 1.0f &&
+
+            mcp.z.x == 0.545098066f &&
+            mcp.z.y == 0.0941176713f &&
+            mcp.z.z == 0.0f
+            ) {
+        printMatrix(mcp);
+        }
         Matrix3x3 id = NewMatrix(
             (Vector3){1.0f, 0.0f, 0.0f},
             (Vector3){0.0f, 1.0f, 0.0f},
@@ -284,8 +300,13 @@ namespace Coloriser {
                 }
                 f32 dzielnik = m.arr[yy].arr[x] / m.arr[y].arr[x];
                 for range(xx, 3) {
-                    m.arr[yy].arr[xx] -= dzielnik * m.arr[y].arr[xx];
-                    id.arr[yy].arr[xx] -= dzielnik * id.arr[y].arr[xx];
+                    f32 t  =  m.arr[yy].arr[xx] - dzielnik * m.arr[y].arr[xx];
+                    printf("%f - %f = %f\n", m.arr[yy].arr[xx], dzielnik * m.arr[y].arr[xx], t);
+                    m.arr[yy].arr[xx] = t;
+                    t = id.arr[yy].arr[xx] - dzielnik * id.arr[y].arr[xx];
+                    id.arr[yy].arr[xx] = t;
+                    // m.arr[yy].arr[xx] -= dzielnik * m.arr[y].arr[xx];
+                    // id.arr[yy].arr[xx] -= dzielnik * id.arr[y].arr[xx];
                     // v.arr[yy] -= v.arr[y] * dzielnik;
                 }
 
@@ -297,7 +318,10 @@ namespace Coloriser {
         for range(x, 3) {
             u32 yy = x + 1;
             while (yy < 3) {
-                assert(m.arr[yy].arr[x] == 0.0f);
+                assert(
+                    (m.arr[yy].arr[x] == 0.0f && x != yy) ||
+                    (x == yy)
+                    );
                 yy++;
             }
         }

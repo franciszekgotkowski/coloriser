@@ -138,7 +138,7 @@ int main() {
         // colors->colors[0].r = 100 + 100 * sin(2*GetTime());
         // colors->colors[0].b = 150 + 50 * cos(2*GetTime());
 
-        // colors->colors[1].g = 128 + 127 * cos(GetTime());
+        colors->colors[1].g = 128 + 100 * cos(GetTime());
 
         window.DrawProgram();
     }
