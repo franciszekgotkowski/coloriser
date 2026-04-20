@@ -300,11 +300,12 @@ namespace Coloriser {
                 }
                 f32 dzielnik = m.arr[yy].arr[x] / m.arr[y].arr[x];
                 for range(xx, 3) {
-                    f32 t  =  m.arr[yy].arr[xx] - dzielnik * m.arr[y].arr[xx];
-                    printf("%f - %f = %f\n", m.arr[yy].arr[xx], dzielnik * m.arr[y].arr[xx], t);
-                    m.arr[yy].arr[xx] = t;
-                    t = id.arr[yy].arr[xx] - dzielnik * id.arr[y].arr[xx];
-                    id.arr[yy].arr[xx] = t;
+                    printf("%f - %f = %f\n", m.arr[yy].arr[xx], dzielnik * m.arr[y].arr[xx], m.arr[yy].arr[xx] - dzielnik * m.arr[y].arr[xx]);
+                    if ( id.arr[yy].arr[xx] == dzielnik * id.arr[y].arr[xx] ) {
+                    	id.arr[yy].arr[xx] = 0;
+                    } else {
+                    	id.arr[yy].arr[xx] -= dzielnik * id.arr[y].arr[xx];
+                    }
                     // m.arr[yy].arr[xx] -= dzielnik * m.arr[y].arr[xx];
                     // id.arr[yy].arr[xx] -= dzielnik * id.arr[y].arr[xx];
                     // v.arr[yy] -= v.arr[y] * dzielnik;
